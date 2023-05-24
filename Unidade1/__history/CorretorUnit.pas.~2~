@@ -1,0 +1,37 @@
+unit CorretorUnit;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  TCorretor = class
+  private
+    FNome: string;
+    procedure SetNome(const Value: string);
+  public
+    property Nome: string read FNome write SetNome;
+  end;
+
+  ENomeInvalido = class(Exception)
+
+  end;
+
+implementation
+
+{ TCorretor }
+
+procedure TCorretor.SetNome(const Value: string);
+begin
+  if Value.Length >= 3 then
+  begin
+    FNome := Value;
+  end
+  else
+  begin
+    raise ENomeInvalido.Create('O nome do corretor deve ter pelo menos três letras');
+  end;
+end;
+
+end.

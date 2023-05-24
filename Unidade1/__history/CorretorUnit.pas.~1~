@@ -1,0 +1,12 @@
+unit CorretorUnit;
+
+interface
+
+type
+  TCorretor = class
+
+  end;
+
+implementation
+
+end.

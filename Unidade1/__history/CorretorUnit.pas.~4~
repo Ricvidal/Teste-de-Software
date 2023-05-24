@@ -1,0 +1,64 @@
+unit CorretorUnit;
+
+interface
+
+uses
+  System.SysUtils;
+
+type
+  TCorretor = class
+  private
+    FNome: string;
+    FDataContratacao: TDateTime;
+    procedure SetNome(const Value: string);
+    procedure SetDataContratacao(const Value: TDateTime);
+  public
+    property Nome: string read FNome write SetNome;
+    property DataContratacao: TDateTime read FDataContratacao write SetDataContratacao;
+  end;
+
+  ENomeInvalido = class(Exception)
+
+  end;
+
+  EDataFuturaInvalida = class(Exception)
+  public
+    constructor Create;
+  end;
+
+implementation
+
+{ TCorretor }
+
+procedure TCorretor.SetDataContratacao(const Value: TDateTime);
+begin
+  if Value <= Now then
+  begin
+    FDataContratacao := Value;
+  end
+  else
+  begin
+    raise EDataFuturaInvalida.Create;
+  end;
+end;
+
+procedure TCorretor.SetNome(const Value: string);
+begin
+  if Value.Length >= 3 then
+  begin
+    FNome := Value;
+  end
+  else
+  begin
+    raise ENomeInvalido.Create('O nome do corretor deve ter pelo menos três letras');
+  end;
+end;
+
+{ EDataFuturaInvalida }
+
+constructor EDataFuturaInvalida.Create;
+begin
+  Self.Message := 'A data de contratação não pode ser maior que a data atual';
+end;
+
+end.

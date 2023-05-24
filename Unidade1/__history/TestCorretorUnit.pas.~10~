@@ -1,0 +1,84 @@
+unit TestCorretorUnit;
+
+interface
+
+uses
+  DUnitX.TestFramework, CorretorUnit;
+
+type
+
+  [TestFixture]
+  TTestCorretor = class
+  private
+    corretor: TCorretor;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [Test]
+    [TestCase('Testar nomes inválidos 01', 'Ze')]
+    [TestCase('Testar nomes inválidos 02', 'Lu')]
+    [TestCase('Testar nomes inválidos 03', 'A')]
+    [TestCase('Testar nomes inválidos 04', '')]
+    procedure TestNomeInvalido(const ANome: string);
+
+    [Test]
+    [TestCase('Testar nomes válidos 01', 'Ana')]
+    [TestCase('Testar nomes válidos 02', 'Marcelo')]
+    procedure TestNomeValido(const ANome: string);
+
+    [Test]
+    [TestCase('Testar datas inválidas 01', '01/05/2023')]
+    [TestCase('Testar datas inválidas 02', '26/04/2023')]
+    procedure TestDataInvalida(const AData: string);
+
+  end;
+
+implementation
+
+uses
+  System.SysUtils;
+
+procedure TTestCorretor.Setup;
+begin
+  corretor := TCorretor.Create;
+end;
+
+procedure TTestCorretor.TearDown;
+begin
+  corretor.Free;
+end;
+
+procedure TTestCorretor.TestNomeValido(const ANome: string);
+begin
+  Assert.WillNotRaise(
+    procedure
+    begin
+      corretor.Nome := ANome;
+    end, ENomeInvalido);
+end;
+
+procedure TTestCorretor.TestDataInvalida(const AData: string);
+begin
+  Assert.WillRaise(
+    procedure
+    begin
+      corretor.DataContratacao := StrToDateTime(AData);
+    end, EDataFuturaInvalida);
+end;
+
+procedure TTestCorretor.TestNomeInvalido(const ANome: string);
+begin
+  Assert.WillRaise(
+    procedure
+    begin
+      corretor.Nome := ANome;
+    end, ENomeInvalido);
+end;
+
+initialization
+
+TDUnitX.RegisterTestFixture(TTestCorretor);
+
+end.

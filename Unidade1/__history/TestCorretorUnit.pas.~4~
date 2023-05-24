@@ -1,0 +1,47 @@
+unit TestCorretorUnit;
+
+interface
+
+uses
+  DUnitX.TestFramework, CorretorUnit;
+
+type
+
+  [TestFixture]
+  TTestCorretor = class
+  private
+    corretor: TCorretor;
+  public
+    [Setup]
+    procedure Setup;
+    [TearDown]
+    procedure TearDown;
+    [Test]
+    procedure TestValidarNome(const ANome: string);
+  end;
+
+implementation
+
+procedure TTestCorretor.Setup;
+begin
+  corretor := TCorretor.Create;
+end;
+
+procedure TTestCorretor.TearDown;
+begin
+  corretor.Free;
+end;
+
+procedure TTestCorretor.TestValidarNome(const ANome: string);
+begin
+  Assert.WillRaise(
+    procedure
+    begin
+      corretor.Nome := 'Ze';
+    end, )
+end;
+
+initialization
+  TDUnitX.RegisterTestFixture(TTestCorretor);
+
+end.
