@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: CalculadoraTeste
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.065 s <<< FAILURE! - in CalculadoraTeste
+testSoma3  Time elapsed: 0.011 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <0> but was: <3>
+	at CalculadoraTeste.testSoma3(CalculadoraTeste.java:65)
+
+testSoma5  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.ArithmeticException: / by zero
+	at CalculadoraTeste.testSoma5(CalculadoraTeste.java:82)
+
